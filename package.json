@@ -1,0 +1,74 @@
+{
+  "name": "bestinut-ai",
+  "version": "1.0.0",
+  "description": "Aplikasi Diet & Gaya Hidup Sehat Berbasis AI dengan fitur chatbot, meal tracking, dan analytics",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "live-server --port=8000 --open=/",
+    "build": "echo 'Build process akan ditambahkan di masa depan'",
+    "test": "echo 'Test suite akan ditambahkan di masa depan'",
+    "lint": "echo 'Linting akan ditambahkan di masa depan'"
+  },
+  "keywords": [
+    "ai",
+    "diet",
+    "nutrition",
+    "health",
+    "fitness",
+    "machine-learning",
+    "chatbot",
+    "voice-commands",
+    "analytics",
+    "responsive-design"
+  ],
+  "author": "BestiNut AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bestinut/bestinut-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bestinut/bestinut-ai/issues"
+  },
+  "homepage": "https://bestinut.ai",
+  "dependencies": {
+    "chart.js": "^4.4.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "features": {
+    "ai-chatbot": "AI Nutritionist chatbot dengan responses cerdas",
+    "ai-diet-planner": "Diet planner dengan perhitungan BMR/TDEE otomatis",
+    "ai-meal-tracker": "Tracking nutrisi dengan analisis gambar AI",
+    "voice-commands": "Navigasi menggunakan perintah suara",
+    "analytics-dashboard": "Dashboard interaktif dengan charts dan insights",
+    "responsive-design": "Design yang responsif untuk semua device",
+    "modern-ui": "Interface modern dengan animations dan transitions"
+  },
+  "ai-capabilities": {
+    "natural-language-processing": "Chatbot responses berdasarkan konteks",
+    "image-recognition": "Analisis makanan dari foto",
+    "speech-recognition": "Pengenalan perintah suara",
+    "predictive-analytics": "Rekomendasi berdasarkan data pengguna",
+    "personalization": "Diet plan yang disesuaikan dengan profil"
+  },
+  "performance": {
+    "lazy-loading": "Optimasi loading time",
+    "smooth-animations": "60fps animations",
+    "responsive-images": "Images yang dioptimasi",
+    "minified-assets": "CSS dan JS yang di-minify",
+    "caching": "Browser caching untuk assets"
+  }
+}

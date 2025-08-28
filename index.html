@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BestiNut AI — Rekomendasi diet personal, meal tracking berbasis AI, dan dashboard analitik kesehatan yang modern.">
+    <meta name="theme-color" content="#4CAF50">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Title and favicon -->
+    <title>BestiNut AI — Bimbingan Diet & Gaya Hidup Sehat Berbasis AI</title>
+    <link rel="icon" href="public/assets/images/logo.png" type="image/png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+
+<body data-theme="vibrant">
+    <!-- Skip Link for Accessibility -->
+    <a href="#home" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+        Lewati ke konten
+    </a>
+    
+    <!-- NoScript Warning -->
+    <noscript>
+        <div style="background:#ffefc1;color:#5f4200;padding:10px 16px;text-align:center;">
+            Beberapa fitur AI memerlukan JavaScript untuk berjalan.
+        </div>
+    </noscript>
+    
+    <!-- Theme Switcher Floating -->
+    <div class="theme-switcher" aria-label="Theme switcher">
+        <button class="theme-btn" data-theme="vibrant" title="Vibrant" aria-label="Ganti tema ke Vibrant" type="button">
+            <i class="fas fa-sun"></i>
+        </button>
+        <button class="theme-btn" data-theme="calm" title="Calm" aria-label="Ganti tema ke Calm" type="button">
+            <i class="fas fa-water"></i>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark" aria-label="Ganti tema ke Dark" type="button">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>BestiNut AI</span>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat AI Assistant...</p>
+        </div>
+    </div>
+    
+    <!-- AI Chatbot Floating Button -->
+    <div id="ai-chatbot" class="ai-chatbot">
+        <div class="chatbot-toggle" onclick="toggleChatbot()" role="button" aria-label="Buka chatbot" tabindex="0">
+            <i class="fas fa-robot"></i>
+            <span class="notification-badge">1</span>
+        </div>
+        
+        <div class="chatbot-container" id="chatbot-container" aria-label="Jendela percakapan AI">
+            <div class="chatbot-header glass">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="chatbot-info">
+                    <h4>AI Nutritionist</h4>
+                    <p>Online • Siap membantu</p>
+                </div>
+                <button class="close-chat" onclick="toggleChatbot()" type="button" aria-label="Tutup chatbot">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbot-messages" role="log" aria-live="polite" aria-relevant="additions">
+                <div class="message ai-message">
+                    <div class="message-content">
+                        <p>Halo! Saya AI Nutritionist BestiNut AI. Tanyakan apa pun seputar kalori, diet, protein, berat badan, dan olahraga.</p>
+                    </div>
+                    <div class="message-time">Baru saja</div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" id="chat-input" placeholder="Ketik pertanyaan Anda..." onkeypress="handleChatInput(event)" aria-label="Ketik pesan ke chatbot">
+                <button onclick="sendMessage()" type="button" aria-label="Kirim pesan">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Voice Command Button -->
+    <div class="voice-command" onclick="toggleVoiceCommand()">
+        <i class="fas fa-microphone" id="voice-icon"></i>
+        <div class="voice-tooltip">Klik untuk perintah suara</div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar glass" role="navigation" aria-label="Navigasi utama">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>BestiNut AI</span>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="#ai-diet" class="nav-link">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Diet</span>
+                </a>
+                <a href="#meal-tracker" class="nav-link">
+                    <i class="fas fa-camera"></i>
+                    <span>Tracking</span>
+                </a>
+                <a href="#analytics" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analisis</span>
+                </a>
+                <a href="#community" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Komunitas</span>
+                </a>
+            </div>
+            
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Announcement: CORISINDO 2025 Competition -->
+        <section id="competition" class="announcement">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">CORISINDO 2025 Competition</h2>
+                    <p class="section-description">
+                        Tema: <strong>Optimalisasi Artificial Intelligence (AI) dan Big Data Dalam Pengambilan Keputusan</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Hero Section -->
+        <section id="home" class="hero" data-parallax>
+            <div class="hero-container">
+                <div class="hero-content" data-parallax-layer data-depth="0.15">
+                    <h1 class="hero-title animate__animated animate__fadeInUp">
+                        Diet Cerdas dengan 
+                        <span class="gradient-text">Kecerdasan Buatan</span>
+                    </h1>
+                    <p class="hero-tagline" style="margin-top:6px;color:var(--text-secondary);font-weight:600;">
+                        BestiNut AI — AI Nutritionist & Healthy Lifestyle Assistant
+                    </p>
+                    <p class="hero-description animate__animated animate__fadeInUp animate__delay-1s">
+                        BestiNut AI menggunakan teknologi machine learning untuk memberikan rekomendasi diet personal, 
+                        tracking nutrisi otomatis, dan bimbingan gaya hidup sehat yang disesuaikan dengan kebutuhan Anda.
+                    </p>
+                    <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
+                        <button class="btn btn-primary" onclick="scrollToSection('ai-diet')" type="button">
+                            <i class="fas fa-rocket"></i>
+                            Mulai AI Diet
+                        </button>
+                        <button class="btn btn-secondary" onclick="openDemo()" type="button">
+                            <i class="fas fa-play"></i>
+                            Lihat Demo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-visual animate__animated animate__fadeInRight animate__delay-1s" data-parallax-layer data-depth="0.25">
+                    <div class="floating-cards">
+                        <div class="floating-card card-1 glass">
+                            <i class="fas fa-apple-alt"></i>
+                            <span>AI Nutrition</span>
+                        </div>
+                        <div class="floating-card card-2 glass">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Smart Analytics</span>
+                        </div>
+                        <div class="floating-card card-3 glass">
+                            <i class="fas fa-dumbbell"></i>
+                            <span>Personal Training</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- AI Diet Section -->
+        <section id="ai-diet" class="ai-diet">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">AI Diet Planner</h2>
+                    <p class="section-description">
+                        Dapatkan rekomendasi diet personal yang disesuaikan dengan profil kesehatan, 
+                        preferensi makanan, dan tujuan Anda menggunakan teknologi AI canggih.
+                    </p>
+                </div>
+                
+                <div class="ai-diet-container">
+                    <div class="diet-form-container">
+                        <form id="aiDietForm" class="ai-diet-form glass">
+                            <div class="form-group">
+                                <label for="name">Nama Lengkap</label>
+                                <input type="text" id="name" placeholder="Masukkan nama Anda" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="age">Usia</label>
+                                    <input type="number" id="age" placeholder="25" min="15" max="100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Jenis Kelamin</label>
+                                    <select id="gender" required>
+                                        <option value="">Pilih</option>
+                                        <option value="male">Pria</option>
+                                        <option value="female">Wanita</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="weight">Berat Badan (kg)</label>
+                                    <input type="number" id="weight" placeholder="65" step="0.1" min="30" max="200" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">Tinggi Badan (cm)</label>
+                                    <input type="number" id="height" placeholder="170" min="120" max="250" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="activity">Aktivitas Fisik</label>
+                                    <select id="activity" required>
+                                        <option value="">Pilih level aktivitas</option>
+                                        <option value="sedentary">Sedentary (Duduk seharian)</option>
+                                        <option value="light">Light (Olahraga ringan 1-3x/minggu)</option>
+                                        <option value="moderate">Moderate (Olahraga 3-5x/minggu)</option>
+                                        <option value="active">Active (Olahraga 6-7x/minggu)</option>
+                                        <option value="very-active">Very Active (Olahraga berat setiap hari)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="goal">Tujuan Utama</label>
+                                    <select id="goal" required>
+                                        <option value="">Pilih tujuan</option>
+                                        <option value="weight-loss">Turun Berat Badan</option>
+                                        <option value="weight-gain">Naik Berat Badan</option>
+                                        <option value="maintain">Pertahankan Berat Badan</option>
+                                        <option value="muscle-gain">Tambah Massa Otot</option>
+                                        <option value="healthy-lifestyle">Gaya Hidup Sehat</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="allergies">Alergi Makanan (Opsional)</label>
+                                <input type="text" id="allergies" placeholder="Contoh: kacang, seafood, susu">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="preferences">Preferensi Makanan (Opsional)</label>
+                                <input type="text" id="preferences" placeholder="Contoh: vegetarian, halal, rendah garam">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <i class="fas fa-magic"></i>
+                                Generate AI Diet Plan
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="diet-result-container glass" id="dietResult">
+                        <div class="result-placeholder">
+                            <i class="fas fa-robot"></i>
+                            <h3>AI akan menganalisis data Anda</h3>
+                            <p>Setelah mengisi form, AI akan memberikan rekomendasi diet personal yang optimal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Meal Tracker Section -->
+        <section id="meal-tracker" class="meal-tracker">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">AI Meal Tracker</h2>
+                    <p class="section-description">
+                        Tracking nutrisi otomatis dengan AI. Foto makanan Anda dan dapatkan analisis 
+                        kalori, protein, karbohidrat, dan lemak secara instan.
+                    </p>
+                </div>
+                
+                <div class="tracker-container">
+                    <div class="tracker-upload">
+                        <div class="upload-area glass" id="uploadArea">
+                            <i class="fas fa-camera"></i>
+                            <h3>Foto Makanan Anda</h3>
+                            <p>Klik atau drag & drop foto makanan untuk analisis AI</p>
+                            <input type="file" id="foodImage" accept="image/*" onchange="handleImageUpload(event)">
+                        </div>
+                        
+                        <div class="upload-tips glass">
+                            <h4>Tips Foto yang Baik:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Pastikan makanan terlihat jelas</li>
+                                <li><i class="fas fa-check"></i> Hindari bayangan yang terlalu gelap</li>
+                                <li><i class="fas fa-check"></i> Foto dari atas untuk hasil terbaik</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tracker-result glass" id="trackerResult">
+                        <div class="result-placeholder">
+                            <i class="fas fa-image"></i>
+                            <h3>Upload foto makanan</h3>
+                            <p>AI akan menganalisis dan memberikan breakdown nutrisi lengkap</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Analytics Section -->
+        <section id="analytics" class="analytics">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">AI Analytics Dashboard</h2>
+                    <p class="section-description">
+                        Visualisasi data kesehatan personal dengan AI insights untuk membantu 
+                        Anda memahami tren dan pola nutrisi.
+                    </p>
+                </div>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3>Progress Berat Badan</h3>
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <canvas id="weightChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3>Asupan Nutrisi Harian</h3>
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <canvas id="nutritionChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3>Kalori vs Target</h3>
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="calorie-progress">
+                            <div class="progress-circle">
+                                <svg width="120" height="120">
+                                    <defs>
+                                        <linearGradient id="grad-progress" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#ff6b6b"/>
+                                            <stop offset="50%" stop-color="#2ec4ff"/>
+                                            <stop offset="100%" stop-color="#8a2be2"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#e0e0e0" stroke-width="8"/>
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="url(#grad-progress)" stroke-width="8" 
+                                            stroke-dasharray="314" stroke-dashoffset="125" class="progress-circle-fill"/>
+                                </svg>
+                                <div class="progress-text">
+                                    <span class="progress-number">60%</span>
+                                    <span class="progress-label">Target</span>
+                                </div>
+                            </div>
+                            <div class="calorie-info">
+                                <div class="calorie-item">
+                                    <span class="calorie-label">Dikonsumsi</span>
+                                    <span class="calorie-value">1200 kcal</span>
+                                </div>
+                                <div class="calorie-item">
+                                    <span class="calorie-label">Target</span>
+                                    <span class="calorie-value">2000 kcal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3>AI Insights</h3>
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="ai-insights">
+                            <div class="insight-item">
+                                <i class="fas fa-arrow-up text-success"></i>
+                                <div class="insight-content">
+                                    <h4>Asupan Protein Meningkat</h4>
+                                    <p>Protein harian Anda 15% lebih tinggi dari minggu lalu. Pertahankan!</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                                <div class="insight-content">
+                                    <h4>Kurang Serat</h4>
+                                    <p>Tambah konsumsi sayur dan buah untuk memenuhi kebutuhan serat harian.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Community Section -->
+        <section id="community" class="community">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Komunitas BestiNut AI</h2>
+                    <p class="section-description">
+                        Bergabung dengan komunitas pecinta gaya hidup sehat. Berbagi pengalaman, 
+                        tips, dan dukungan untuk mencapai tujuan kesehatan Anda.
+                    </p>
+                </div>
+                
+                <div class="community-content">
+                    <div class="community-stats">
+                        <div class="stat-item glass">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Anggota Aktif</div>
+                        </div>
+                        <div class="stat-item glass">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Post Harian</div>
+                        </div>
+                        <div class="stat-item glass">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                    
+                    <div class="community-features">
+                        <div class="feature-item glass">
+                            <i class="fas fa-users"></i>
+                            <h3>Grup Dukungan</h3>
+                            <p>Bergabung dengan grup sesuai tujuan diet Anda</p>
+                        </div>
+                        <div class="feature-item glass">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Challenges</h3>
+                            <p>Ikuti tantangan kesehatan dengan hadiah menarik</p>
+                        </div>
+                        <div class="feature-item glass">
+                            <i class="fas fa-star"></i>
+                            <h3>Expert Q&A</h3>
+                            <p>Tanya langsung ke ahli nutrisi dan fitness</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Support Section -->
+        <section id="support" class="support-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Dukungan</h2>
+                    <p class="section-subtitle">Kami siap membantu Anda dengan berbagai layanan dukungan</p>
+                </div>
+                
+                <!-- Main Support Services -->
+                <div class="support-grid">
+                    <!-- Help Section -->
+                    <div class="support-card">
+                        <div class="support-header">
+                            <div class="support-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <h3>Bantuan</h3>
+                        </div>
+                        <p>Dapatkan panduan lengkap cara menggunakan BestiNut AI untuk mencapai tujuan kesehatan Anda.</p>
+                        
+                        <div class="support-features">
+                            <div class="feature-item">
+                                <i class="fas fa-play-circle"></i>
+                                <span>Video Tutorial</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-book"></i>
+                                <span>Panduan Lengkap</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Tips & Trik</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="window.fitHarmonyAI.showHelpGuide()">Lihat Panduan</button>
+                    </div>
+                    
+                    <!-- FAQ Section -->
+                    <div class="support-card">
+                        <div class="support-header">
+                            <div class="support-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3>FAQ</h3>
+                        </div>
+                        <p>Pertanyaan yang sering diajukan dan jawaban lengkap untuk membantu Anda.</p>
+                        
+                        <div class="faq-list">
+                            <div class="faq-item">
+                                <h4>Bagaimana cara menggunakan AI Diet Planner?</h4>
+                                <p>Masukkan data pribadi Anda dan AI akan membuat rencana diet yang disesuaikan dengan kebutuhan.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Apakah data saya aman?</h4>
+                                <p>Ya, kami menggunakan enkripsi tingkat tinggi untuk melindungi semua data pribadi Anda.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Berapa biaya berlangganan?</h4>
+                                <p>Kami menawarkan berbagai paket berlangganan mulai dari gratis hingga premium.</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="window.fitHarmonyAI.showAllFAQ()">Lihat Semua FAQ</button>
+                    </div>
+                    
+                    <!-- Contact Section -->
+                    <div class="support-card">
+                        <div class="support-header">
+                            <div class="support-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3>Kontak</h3>
+                        </div>
+                        <p>Hubungi tim dukungan kami untuk bantuan langsung dan pertanyaan khusus.</p>
+                        
+                        <div class="contact-list">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div class="contact-details">
+                                    <span class="contact-label">Email</span>
+                                    <span class="contact-value">support@bestinut.ai</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div class="contact-details">
+                                    <span class="contact-label">Telepon</span>
+                                    <span class="contact-value">+62 21 1234 5678</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <div class="contact-details">
+                                    <span class="contact-label">Jam Operasional</span>
+                                    <span class="contact-value">Senin - Jumat: 9:00 - 18:00 WIB</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="contact-details">
+                                    <span class="contact-label">Lokasi</span>
+                                    <span class="contact-value">Medan, Indonesia</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="window.fitHarmonyAI.contactSupport()">Hubungi Kami</button>
+                    </div>
+                    
+                    <!-- Privacy Policy Section -->
+                    <div class="support-card">
+                        <div class="support-header">
+                            <div class="support-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Privacy Policy</h3>
+                        </div>
+                        <p>Kebijakan privasi yang transparan untuk melindungi hak dan data pribadi Anda.</p>
+                        
+                        <div class="privacy-list">
+                            <div class="privacy-item">
+                                <i class="fas fa-lock"></i>
+                                <span>Data Terenkripsi</span>
+                            </div>
+                            <div class="privacy-item">
+                                <i class="fas fa-user-shield"></i>
+                                <span>Kontrol Penuh Data</span>
+                            </div>
+                            <div class="privacy-item">
+                                <i class="fas fa-eye-slash"></i>
+                                <span>Tidak Ada Tracking</span>
+                            </div>
+                            <div class="privacy-item">
+                                <i class="fas fa-gavel"></i>
+                                <span>Kepatuhan GDPR</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="window.fitHarmonyAI.showPrivacyPolicy()">Baca Kebijakan</button>
+                    </div>
+                </div>
+                
+                <!-- Additional Support Channels -->
+                <div class="support-channels-section">
+                    <div class="channels-header">
+                        <h3>Butuh Bantuan Lebih Lanjut?</h3>
+                        <p>Tim dukungan kami siap membantu Anda 24/7 melalui berbagai saluran komunikasi.</p>
+                    </div>
+                    
+                    <div class="channels-grid">
+                        <div class="channel-card">
+                            <div class="channel-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <h4>WhatsApp</h4>
+                            <p>Chat langsung dengan tim dukungan</p>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        
+                        <div class="channel-card">
+                            <div class="channel-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4>Live Chat</h4>
+                            <p>Dapatkan bantuan instan di website</p>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        
+                        <div class="channel-card">
+                            <div class="channel-icon">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <h4>Ticket System</h4>
+                            <p>Buat tiket untuk masalah kompleks</p>
+                            <span class="status-badge">24 Jam</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer glass" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>BestiNut AI</span>
+                    </div>
+                    <p>Menggunakan teknologi AI untuk membantu Anda mencapai gaya hidup sehat yang optimal.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Fitur Utama</h4>
+                    <ul>
+                        <li><a href="#ai-diet">AI Diet Planner</a></li>
+                        <li><a href="#meal-tracker">Meal Tracker</a></li>
+                        <li><a href="#analytics">Analytics</a></li>
+                        <li><a href="#community">Komunitas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Dukungan</h4>
+                    <ul>
+                        <li><a href="#">Bantuan</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Kontak</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan tips kesehatan terbaru dari AI Nutritionist kami.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" aria-label="Email untuk newsletter">
+                        <button type="submit" aria-label="Berlangganan newsletter">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 BestiNut AI. All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
